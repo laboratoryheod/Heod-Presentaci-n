@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>heod — Marketplace Universitario</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --orange: #E8521A;
+    --orange-light: #FF8C42;
+    --dark: #1A1A2E;
+    --teal: #1D9E75;
+    --purple: #7F77DD;
+    --purple-dark: #534AB7;
+    --blue: #185FA5;
+    --green: #3B6D11;
+    --bg: #F9F6F3;
+    --card: #FFFFFF;
+    --text: #1A1A2E;
+    --muted: #7A7A8C;
+    --border: rgba(0,0,0,0.08);
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    overflow-x: hidden;
+  }
+
+  /* HEADER */
+  .top-bar {
+    width: 100%;
+    background: var(--dark);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+    color: white;
+    letter-spacing: -1px;
+  }
+  .logo span { color: var(--orange); }
+  .top-badge {
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* SLIDES CONTAINER */
+  .slides-wrap {
+    width: 100%;
+    max-width: 600px;
+    padding: 0;
+  }
+
+  .slide {
+    display: none;
+    animation: fadeUp 0.4s ease;
+  }
+  .slide.active { display: block; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SLIDE 1: HERO */
+  .s1-hero {
+    background: linear-gradient(160deg, #1A1A2E 55%, #2D1810 100%);
+    min-height: 100svh;
+    padding: 52px 28px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .orb1 {
+    position: absolute;
+    width: 340px; height: 340px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,82,26,0.22) 0%, transparent 70%);
+    top: -100px; right: -100px;
+    pointer-events: none;
+  }
+  .orb2 {
+    position: absolute;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(127,119,221,0.18) 0%, transparent 70%);
+    bottom: -70px; left: -60px;
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(232,82,26,0.18);
+    border: 1px solid rgba(232,82,26,0.45);
+    color: var(--orange-light);
+    font-size: 11px;
+    font-family: 'Syne', sans-serif;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 18px;
+    border-radius: 24px;
+    margin-bottom: 22px;
+  }
+  .hero-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(72px, 22vw, 100px);
+    font-weight: 800;
+    color: white;
+    line-height: 1;
+    letter-spacing: -3px;
+    margin-bottom: 10px;
+  }
+  .hero-title span { color: var(--orange); }
+  .hero-sub {
+    font-size: 15px;
+    color: rgba(255,255,255,0.58);
+    max-width: 340px;
+    margin: 0 auto 36px;
+    line-height: 1.65;
+  }
+  .hero-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+  .hero-pill {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.13);
+    color: rgba(255,255,255,0.75);
+    padding: 7px 16px;
+    border-radius: 24px;
+    font-size: 13px;
+  }
+  .hero-cta {
+    background: var(--orange);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 36px;
+    font-size: 15px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    width: 100%;
+    max-width: 280px;
+    transition: opacity 0.2s, transform 0.15s;
+  }
+  .hero-cta:hover { opacity: 0.9; transform: scale(0.99); }
+
+  /* SLIDE INNER PADDING */
+  .slide-inner {
+    padding: 36px 24px 28px;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .slide-tag {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 8px;
+  }
+  .slide-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(24px, 7vw, 30px);
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 6px;
+    line-height: 1.1;
+  }
+  .slide-title span { color: var(--orange); }
+  .slide-sub {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 28px;
+    line-height: 1.55;
+  }
+
+  /* FLOW STEPS */
+  .flow-steps { display: flex; flex-direction: column; gap: 0; }
+  .flow-step { display: flex; align-items: flex-start; gap: 14px; }
+  .flow-left { display: flex; flex-direction: column; align-items: center; width: 40px; flex-shrink: 0; }
+  .flow-num {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: white;
+    flex-shrink: 0;
+  }
+  .flow-line {
+    width: 2px; flex: 1; min-height: 18px;
+    background: var(--border);
+    margin: 4px 0;
+  }
+  .flow-content { padding-bottom: 20px; flex: 1; }
+  .flow-tag2 { font-size: 10px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 3px; }
+  .flow-h { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+  .flow-p { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+  /* COMMISSION TIERS */
+  .comm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+  .comm-tier {
+    border-radius: 14px;
+    padding: 16px 14px;
+    position: relative;
+    overflow: hidden;
+  }
+  .tier-badge { font-size: 10px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; opacity: 0.7; }
+  .tier-range { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800; margin-bottom: 3px; color: var(--text); }
+  .tier-comm { font-size: 12px; opacity: 0.75; }
+  .tier-amount { position: absolute; right: 12px; top: 12px; font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 800; opacity: 0.13; }
+
+  /* CALCULATOR */
+  .calc-box {
+    background: white;
+    border-radius: 14px;
+    padding: 18px;
+    border: 1px solid var(--border);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  }
+  .calc-label { font-size: 13px; color: var(--muted); margin-bottom: 10px; }
+  .calc-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .calc-row input[type=range] {
+    flex: 1;
+    -webkit-appearance: none;
+    height: 4px;
+    border-radius: 2px;
+    background: #E0DDD9;
+    outline: none;
+  }
+  .calc-row input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: var(--orange);
+    cursor: pointer;
+  }
+  .calc-val { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; color: var(--text); min-width: 56px; text-align: right; }
+  .calc-result {
+    display: flex; justify-content: space-between; align-items: center;
+    background: #FFF4EE;
+    border-radius: 10px;
+    padding: 12px 16px;
+  }
+  .calc-result-label { font-size: 13px; color: var(--muted); }
+  .calc-result-val { font-family: 'Syne', sans-serif; font-size: 26px; font-weight: 800; color: var(--orange); }
+  .calc-desc { font-size: 11px; color: var(--muted); margin-top: 8px; line-height: 1.4; }
+
+  /* DELIVERY CARDS */
+  .del-grid { display: flex; flex-direction: column; gap: 12px; }
+  .del-card { border-radius: 16px; padding: 20px; }
+  .del-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+  .del-h { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 6px; color: var(--text); }
+  .del-p { font-size: 13px; line-height: 1.55; }
+  .del-note {
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: 8px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    display: inline-block;
+  }
+  .del-tag {
+    display: inline-block;
+    font-size: 11px; font-weight: 500;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-top: 8px;
+  }
+
+  /* ECOSYSTEM */
+  .eco-actors { display: flex; flex-direction: column; gap: 10px; }
+  .eco-actor {
+    display: flex; align-items: center; gap: 14px;
+    background: white;
+    border-radius: 12px;
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+  }
+  .eco-avatar { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+  .eco-actor-name { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 2px; }
+  .eco-actor-desc { font-size: 12px; color: var(--muted); line-height: 1.4; }
+  .eco-benefit { font-size: 12px; font-weight: 500; color: var(--teal); text-align: right; flex-shrink: 0; max-width: 90px; }
+
+  /* NAV */
+  .nav-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: white;
+    border-top: 1px solid var(--border);
+    padding: 12px 20px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 100;
+    max-width: 100%;
+  }
+  .nav-dots { display: flex; gap: 6px; align-items: center; }
+  .nav-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #D0CEC8;
+    cursor: pointer;
+    border: none;
+    padding: 0;
+    transition: all 0.2s;
+  }
+  .nav-dot.active { background: var(--orange); width: 20px; border-radius: 4px; }
+  .nav-btns { display: flex; gap: 8px; }
+  .nav-btn {
+    background: #F2EFE9;
+    border: none;
+    border-radius: 10px;
+    padding: 9px 18px;
+    font-size: 13px;
+    cursor: pointer;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    transition: background 0.15s, transform 0.1s;
+  }
+  .nav-btn:hover { background: #E8E4DC; }
+  .nav-btn:active { transform: scale(0.97); }
+  .nav-btn:disabled { opacity: 0.3; cursor: default; }
+  .nav-btn.primary { background: var(--orange); color: white; }
+  .nav-btn.primary:hover { background: #D0481A; }
+
+  .slide-bottom-pad { height: 80px; }
+
+  /* SLIDE COUNTER */
+  .slide-count { font-size: 12px; color: var(--muted); text-align: center; margin-bottom: 4px; }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="logo">he<span>od</span></div>
+  <div class="top-badge">Marketplace universitario</div>
+</div>
+
+<div class="slides-wrap">
+
+  <!-- SLIDE 1: HERO -->
+  <div class="slide active" id="slide-1">
+    <div class="s1-hero">
+      <div class="orb1"></div>
+      <div class="orb2"></div>
+      <div class="hero-badge">Marketplace universitario</div>
+      <div class="hero-title">he<span>od</span></div>
+      <p class="hero-sub">El ecosistema que conecta emprendedores universitarios con sus clientes — con pagos automáticos, chatbot integrado y delivery en campus.</p>
+      <div class="hero-pills">
+        <div class="hero-pill">Yape automático</div>
+        <div class="hero-pill">Chatbot inteligente</div>
+        <div class="hero-pill">Campus y delivery</div>
+        <div class="hero-pill">Comisiones justas</div>
+      </div>
+      <button class="hero-cta" onclick="navigate(1)">Ver cómo funciona →</button>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: CÓMO FUNCIONA -->
+  <div class="slide" id="slide-2">
+    <div class="slide-inner">
+      <div class="slide-tag">El proceso</div>
+      <div class="slide-title">Cómo funciona <span>heod</span></div>
+      <p class="slide-sub">Del pedido al vendedor — sin fricción, sin llamadas, sin caos.</p>
+
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="flow-left">
+            <div class="flow-num" style="background:var(--orange);">1</div>
+            <div class="flow-line"></div>
+          </div>
+          <div class="flow-content">
+            <div class="flow-tag2" style="color:var(--orange);">cliente</div>
+            <div class="flow-h">Explora y hace su pedido</div>
+            <p class="flow-p">El cliente navega el marketplace y elige productos de emprendedores de su propia universidad.</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-left">
+            <div class="flow-num" style="background:var(--purple);">2</div>
+            <div class="flow-line"></div>
+          </div>
+          <div class="flow-content">
+            <div class="flow-tag2" style="color:var(--purple);">chatbot</div>
+            <div class="flow-h">El chatbot gestiona la orden</div>
+            <p class="flow-p">Nuestro bot actúa de intermediario: confirma el pedido, guía al cliente y coordina los detalles de entrega.</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-left">
+            <div class="flow-num" style="background:var(--teal);">3</div>
+            <div class="flow-line"></div>
+          </div>
+          <div class="flow-content">
+            <div class="flow-tag2" style="color:var(--teal);">pago</div>
+            <div class="flow-h">Yape automático confirmado</div>
+            <p class="flow-p">El sistema verifica el pago vía Yape de forma automática — sin intervención manual, sin errores.</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-left">
+            <div class="flow-num" style="background:var(--orange-light);">4</div>
+          </div>
+          <div class="flow-content" style="padding-bottom:0;">
+            <div class="flow-tag2" style="color:var(--orange-light);">vendedor</div>
+            <div class="flow-h">Solo recibe: ¿dónde y cuándo?</div>
+            <p class="flow-p">El emprendedor recibe la notificación con el lugar y hora de entrega. Nada más — simple y enfocado.</p>
+          </div>
+        </div>
+      </div>
+      <div class="slide-bottom-pad"></div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: COMISIONES -->
+  <div class="slide" id="slide-3">
+    <div class="slide-inner">
+      <div class="slide-tag">Modelo de negocio</div>
+      <div class="slide-title">Comisiones <span>justas</span></div>
+      <p class="slide-sub">Se evalúa el total de la venta, no producto por producto. Así afectamos menos a los emprendedores de productos pequeños.</p>
+
+      <div class="comm-grid">
+        <div class="comm-tier" style="background:#FFF4EE;">
+          <div class="tier-amount" style="color:var(--orange);">S/0.50</div>
+          <div class="tier-badge" style="color:var(--orange);">básico</div>
+          <div class="tier-range">S/ 0 – 7</div>
+          <div class="tier-comm" style="color:#5A3020;">Venta hasta 7 soles</div>
+        </div>
+        <div class="comm-tier" style="background:#EAF3DE;">
+          <div class="tier-amount" style="color:var(--green);">S/1</div>
+          <div class="tier-badge" style="color:var(--green);">medio</div>
+          <div class="tier-range">S/ 7 – 20</div>
+          <div class="tier-comm" style="color:#2A4010;">Entre 7 y 20 soles</div>
+        </div>
+        <div class="comm-tier" style="background:#EEEDFE; grid-column: 1 / -1;">
+          <div class="tier-amount" style="color:var(--purple);">S/3</div>
+          <div class="tier-badge" style="color:var(--purple-dark);">premium</div>
+          <div class="tier-range">S/ 20+</div>
+          <div class="tier-comm" style="color:#26215C;">Mayor a 20 soles — comisión fija máxima</div>
+        </div>
+      </div>
+
+      <div class="calc-box">
+        <div class="calc-label">Simula tu venta — arrastra para ajustar el total</div>
+        <div class="calc-row">
+          <span style="font-size:13px;color:var(--muted);">S/</span>
+          <input type="range" id="sale-slider" min="1" max="60" value="15" step="1">
+          <div class="calc-val" id="sale-display">S/ 15</div>
+        </div>
+        <div class="calc-result">
+          <div>
+            <div class="calc-result-label">Comisión heod</div>
+          </div>
+          <div class="calc-result-val" id="comm-result">S/ 1.00</div>
+        </div>
+        <div class="calc-desc" id="calc-desc"></div>
+      </div>
+      <div class="slide-bottom-pad"></div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: DELIVERY -->
+  <div class="slide" id="slide-4">
+    <div class="slide-inner">
+      <div class="slide-tag">Logística</div>
+      <div class="slide-title">Modalidades de <span>entrega</span></div>
+      <p class="slide-sub">Flexibilidad para el vendedor y comodidad para el cliente.</p>
+
+      <div class="del-grid">
+        <div class="del-card" style="background:#FFF4EE;">
+          <span class="del-icon">🎓</span>
+          <div class="del-h">Entrega en campus</div>
+          <p class="del-p" style="color:#5A3020;">Entrega dentro del campus universitario. El vendedor elige el punto exacto — sin salir de su zona de confort.</p>
+          <span class="del-tag" style="background:rgba(232,82,26,0.12);color:var(--orange);">Disponible siempre</span>
+        </div>
+        <div class="del-card" style="background:#E1F5EE;">
+          <span class="del-icon">🏠</span>
+          <div class="del-h">A domicilio</div>
+          <p class="del-p" style="color:#085041;">El vendedor colaborador que tenga capacidad puede ofrecer entrega fuera del campus, ampliando su alcance.</p>
+          <span class="del-tag" style="background:rgba(29,158,117,0.12);color:var(--teal);">Por vendedor</span>
+        </div>
+        <div class="del-card" style="background:#EEEDFE;">
+          <span class="del-icon">🛵</span>
+          <div class="del-h">Delivery con rider heod</div>
+          <p class="del-p" style="color:#26215C;">¿El vendedor no hace delivery? Nosotros conectamos con un colaborador en moto lineal para llevar el pedido.</p>
+          <div class="del-note" style="background:rgba(127,119,221,0.13);color:var(--purple-dark);">
+            El costo del delivery se añade al pedido y varía según la zona de entrega.
+          </div>
+          <br>
+          <span class="del-tag" style="background:rgba(83,74,183,0.12);color:var(--purple-dark);">Red heod de riders</span>
+        </div>
+      </div>
+      <div class="slide-bottom-pad"></div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: ECOSISTEMA -->
+  <div class="slide" id="slide-5">
+    <div class="slide-inner">
+      <div class="slide-tag">Quiénes somos</div>
+      <div class="slide-title">El ecosistema <span>heod</span></div>
+      <p class="slide-sub">Tres actores, un solo sistema que los une.</p>
+
+      <div class="eco-actors">
+        <div class="eco-actor">
+          <div class="eco-avatar" style="background:#FFF4EE;">🧑‍🍳</div>
+          <div style="flex:1;">
+            <div class="eco-actor-name">Emprendedor universitario</div>
+            <div class="eco-actor-desc">Vende sin lidiar con pagos, coordinación ni delivery.</div>
+          </div>
+          <div class="eco-benefit">Más ventas, menos drama</div>
+        </div>
+        <div class="eco-actor">
+          <div class="eco-avatar" style="background:#E1F5EE;">📱</div>
+          <div style="flex:1;">
+            <div class="eco-actor-name">Cliente universitario</div>
+            <div class="eco-actor-desc">Pide por chat, paga con Yape y espera su producto.</div>
+          </div>
+          <div class="eco-benefit">Fácil y rápido</div>
+        </div>
+        <div class="eco-actor">
+          <div class="eco-avatar" style="background:#EEEDFE;">🤖</div>
+          <div style="flex:1;">
+            <div class="eco-actor-name">Chatbot heod</div>
+            <div class="eco-actor-desc">Gestiona pedidos, confirma pagos y coordina entregas 24/7.</div>
+          </div>
+          <div class="eco-benefit" style="color:var(--purple);">El corazón del sistema</div>
+        </div>
+        <div class="eco-actor">
+          <div class="eco-avatar" style="background:#E6F1FB;">🛵</div>
+          <div style="flex:1;">
+            <div class="eco-actor-name">Rider heod</div>
+            <div class="eco-actor-desc">Extiende el alcance más allá del campus cuando se necesita.</div>
+          </div>
+          <div class="eco-benefit" style="color:var(--blue);">Alcance extendido</div>
+        </div>
+      </div>
+
+      <div style="margin-top:24px;text-align:center;padding-bottom:8px;">
+        <div style="font-size:13px;color:var(--muted);margin-bottom:12px;">¿Listo para unirte a heod?</div>
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+          <a href="https://wa.me/" style="display:inline-block;background:var(--orange);color:white;text-decoration:none;border-radius:12px;padding:13px 28px;font-size:14px;font-weight:500;">Contáctanos por WhatsApp</a>
+        </div>
+      </div>
+      <div class="slide-bottom-pad"></div>
+    </div>
+  </div>
+
+</div><!-- /slides-wrap -->
+
+<!-- NAV BAR -->
+<div class="nav-bar">
+  <div class="nav-dots">
+    <button class="nav-dot active" onclick="goTo(1)" aria-label="Slide 1"></button>
+    <button class="nav-dot" onclick="goTo(2)" aria-label="Slide 2"></button>
+    <button class="nav-dot" onclick="goTo(3)" aria-label="Slide 3"></button>
+    <button class="nav-dot" onclick="goTo(4)" aria-label="Slide 4"></button>
+    <button class="nav-dot" onclick="goTo(5)" aria-label="Slide 5"></button>
+  </div>
+  <div class="nav-btns">
+    <button class="nav-btn" id="btn-prev" onclick="navigate(-1)" disabled>← Ant.</button>
+    <button class="nav-btn primary" id="btn-next" onclick="navigate(1)">Sig. →</button>
+  </div>
+</div>
+
+<script>
+  let current = 1;
+  const total = 5;
+
+  function goTo(n) {
+    document.getElementById('slide-' + current).classList.remove('active');
+    document.querySelectorAll('.nav-dot')[current - 1].classList.remove('active');
+    current = n;
+    document.getElementById('slide-' + current).classList.add('active');
+    document.querySelectorAll('.nav-dot')[current - 1].classList.add('active');
+    document.getElementById('btn-prev').disabled = current === 1;
+    const nextBtn = document.getElementById('btn-next');
+    nextBtn.disabled = current === total;
+    nextBtn.textContent = current === total ? 'Fin' : 'Sig. →';
+    window.scrollTo(0, 0);
+  }
+
+  function navigate(dir) {
+    const next = current + dir;
+    if (next >= 1 && next <= total) goTo(next);
+  }
+
+  // Touch swipe
+  let touchStartX = 0;
+  document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+  document.addEventListener('touchend', e => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) navigate(diff > 0 ? 1 : -1);
+  });
+
+  // Commission calculator
+  const slider = document.getElementById('sale-slider');
+  const display = document.getElementById('sale-display');
+  const result = document.getElementById('comm-result');
+  const desc = document.getElementById('calc-desc');
+
+  function calcComm(val) {
+    if (val <= 7) return { comm: 0.50, tier: 'nivel básico (S/ 0 – 7)', color: '#E8521A' };
+    if (val <= 20) return { comm: 1.00, tier: 'nivel medio (S/ 7 – 20)', color: '#3B6D11' };
+    return { comm: 3.00, tier: 'nivel premium (S/ 20+)', color: '#534AB7' };
+  }
+
+  slider.addEventListener('input', function () {
+    const val = parseInt(this.value);
+    display.textContent = 'S/ ' + val;
+    const r = calcComm(val);
+    result.textContent = 'S/ ' + r.comm.toFixed(2);
+    result.style.color = r.color;
+    desc.textContent = 'Aplica ' + r.tier + ' — comisión fija sin importar cuántos productos haya en el carrito.';
+  });
+  slider.dispatchEvent(new Event('input'));
+</script>
+</body>
+</html>
