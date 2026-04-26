@@ -43,10 +43,17 @@
     padding: 14px 24px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     position: sticky;
     top: 0;
     z-index: 100;
+  }
+  .top-bar-inner {
+    width: 100%;
+    max-width: 860px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
   .logo {
     font-family: 'Syne', sans-serif;
@@ -66,7 +73,7 @@
   /* SLIDES CONTAINER */
   .slides-wrap {
     width: 100%;
-    max-width: 600px;
+    max-width: 860px;
     padding: 0;
   }
 
@@ -84,8 +91,8 @@
   /* SLIDE 1: HERO */
   .s1-hero {
     background: linear-gradient(160deg, #1A1A2E 55%, #2D1810 100%);
-    min-height: 100svh;
-    padding: 52px 28px 40px;
+    min-height: calc(100vh - 54px);
+    padding: 60px 40px 60px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -125,7 +132,7 @@
   }
   .hero-title {
     font-family: 'Syne', sans-serif;
-    font-size: clamp(72px, 22vw, 100px);
+    font-size: clamp(72px, 12vw, 110px);
     font-weight: 800;
     color: white;
     line-height: 1;
@@ -173,11 +180,19 @@
 
   /* SLIDE INNER PADDING */
   .slide-inner {
-    padding: 36px 24px 28px;
-    min-height: 100svh;
+    padding: 48px 40px 40px;
+    min-height: calc(100vh - 54px);
     display: flex;
     flex-direction: column;
     justify-content: center;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 600px) {
+    .slide-inner {
+      padding: 32px 20px 28px;
+    }
   }
 
   .slide-tag {
@@ -279,6 +294,28 @@
 
   /* DELIVERY CARDS */
   .del-grid { display: flex; flex-direction: column; gap: 12px; }
+
+  @media (min-width: 600px) {
+    .del-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .del-card:last-child {
+      grid-column: 1 / -1;
+    }
+    .comm-grid {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+    .comm-tier:last-child {
+      grid-column: auto;
+    }
+    .eco-actors {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+  }
   .del-card { border-radius: 16px; padding: 20px; }
   .del-icon { font-size: 28px; margin-bottom: 10px; display: block; }
   .del-h { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 6px; color: var(--text); }
@@ -319,12 +356,18 @@
     bottom: 0; left: 0; right: 0;
     background: white;
     border-top: 1px solid var(--border);
-    padding: 12px 20px 20px;
+    padding: 12px 24px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+  }
+  .nav-bar-inner {
+    width: 100%;
+    max-width: 860px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    z-index: 100;
-    max-width: 100%;
   }
   .nav-dots { display: flex; gap: 6px; align-items: center; }
   .nav-dot {
@@ -365,8 +408,10 @@
 <body>
 
 <div class="top-bar">
-  <div class="logo">he<span>od</span></div>
-  <div class="top-badge">Marketplace universitario</div>
+  <div class="top-bar-inner">
+    <div class="logo">he<span>od</span></div>
+    <div class="top-badge">Marketplace universitario</div>
+  </div>
 </div>
 
 <div class="slides-wrap">
@@ -581,18 +626,19 @@
 
 </div><!-- /slides-wrap -->
 
-<!-- NAV BAR -->
 <div class="nav-bar">
-  <div class="nav-dots">
-    <button class="nav-dot active" onclick="goTo(1)" aria-label="Slide 1"></button>
-    <button class="nav-dot" onclick="goTo(2)" aria-label="Slide 2"></button>
-    <button class="nav-dot" onclick="goTo(3)" aria-label="Slide 3"></button>
-    <button class="nav-dot" onclick="goTo(4)" aria-label="Slide 4"></button>
-    <button class="nav-dot" onclick="goTo(5)" aria-label="Slide 5"></button>
-  </div>
-  <div class="nav-btns">
-    <button class="nav-btn" id="btn-prev" onclick="navigate(-1)" disabled>← Ant.</button>
-    <button class="nav-btn primary" id="btn-next" onclick="navigate(1)">Sig. →</button>
+  <div class="nav-bar-inner">
+    <div class="nav-dots">
+      <button class="nav-dot active" onclick="goTo(1)" aria-label="Slide 1"></button>
+      <button class="nav-dot" onclick="goTo(2)" aria-label="Slide 2"></button>
+      <button class="nav-dot" onclick="goTo(3)" aria-label="Slide 3"></button>
+      <button class="nav-dot" onclick="goTo(4)" aria-label="Slide 4"></button>
+      <button class="nav-dot" onclick="goTo(5)" aria-label="Slide 5"></button>
+    </div>
+    <div class="nav-btns">
+      <button class="nav-btn" id="btn-prev" onclick="navigate(-1)" disabled>← Ant.</button>
+      <button class="nav-btn primary" id="btn-next" onclick="navigate(1)">Sig. →</button>
+    </div>
   </div>
 </div>
 
